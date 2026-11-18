@@ -72,8 +72,13 @@ def plot_map(df):
     plt.savefig("outputs/map.png", dpi=150)
     plt.close()
 
-def plot_interantive_map(df):
-    m = folium.Map(location=[39, 35], zoom_start=6)
+def plot_interactive_map(df):
+    m = folium.Map(
+        location=[39, 35],
+        zoom_start=6,
+        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+        attr="Esri",
+    )
     for _, row in df.iterrows():
         if row["magnitude"] >= 5:
             color = "red"
@@ -94,7 +99,7 @@ def plot_interantive_map(df):
 
         ).add_to(m)
 
-        m.save("outputs/map.html")
+    m.save("outputs/map.html")
 
 
 if __name__ == "__main__":
@@ -109,3 +114,4 @@ if __name__ == "__main__":
     plot_monthly_counts(df)
     plot_magnitude_histogram(df)
     plot_map(df)
+    plot_interactive_map(df)
