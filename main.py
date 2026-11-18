@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
+import folium
 from datetime import date
 
 URL = "https://earthquake.usgs.gov/fdsnws/event/1/query"
@@ -70,6 +71,30 @@ def plot_map(df):
     plt.tight_layout()
     plt.savefig("outputs/map.png", dpi=150)
     plt.close()
+
+def plot_interantive_map(df):
+    m = folium.Map(location=[39, 35], zoom_start=6)
+    for _, row in df.iterrows():
+        if row["magnitude"] >= 5:
+            color = "red"
+        elif row["magnitude"] >= 4:
+            color = "orange"
+        else:
+            color = "blue"
+
+        folium.CircleMarker(
+            location=[row["latitude"], row["longitude"]],
+
+            radius = row["magnitude"] * 1.5,
+            color = color,
+            fill = True,
+            fill_opacity = 0.5,
+
+            popup=f"M{row['magnitude']} | {row['place']} | {row['time']:%Y-%m-%d} | depth {row['depth']} km",
+
+        ).add_to(m)
+
+        m.save("outputs/map.html")
 
 
 if __name__ == "__main__":
