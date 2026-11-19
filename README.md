@@ -1,6 +1,6 @@
 # Turkey Earthquake Analysis
 
-Analysing earthquake activity in Turkey using Python, pandas and USGS data.
+This project analyses earthquake activity in Turkey using Python, pandas and USGS data and turns it into graphs using matplotlib.
 
 > This project analyzes historical data only. It does not predict earthquakes.
 
